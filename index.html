@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Lamassat Digital — custom software, AI agents, workflow automation, SaaS and custom integrations.">
+<meta name="theme-color" content="#071b16">
+<title>Lamassat Business Group LLC | Software, AI Agents & Automation</title>
+<link rel="icon" href="assets/lamassat-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+ --ink:#071b16;--ink2:#0c2b22;--green:#087a5a;--green2:#18b47b;--red:#d71f2c;
+ --cream:#f5f7f3;--white:#fff;--muted:#687770;--line:rgba(7,27,22,.10);
+ --shadow:0 24px 80px rgba(7,27,22,.12);--max:1260px;--radius:26px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;color:var(--ink);background:#fff;line-height:1.65;overflow-x:hidden}
+a{text-decoration:none;color:inherit}button,input,textarea{font:inherit}img{max-width:100%;display:block}
+.container{width:min(var(--max),calc(100% - 40px));margin:auto}
+h1,h2,h3,h4{font-family:"Manrope",sans-serif;line-height:1.08;letter-spacing:-.04em}
+h1{font-size:clamp(48px,6.5vw,88px)}h2{font-size:clamp(38px,5vw,64px)}h3{font-size:22px}
+p{color:var(--muted)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:800;color:var(--green)}
+.eyebrow:before{content:"";width:24px;height:2px;background:var(--red)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:999px;padding:14px 21px;font-weight:800;border:1px solid transparent;transition:.25s;cursor:pointer}
+.btn-primary{background:var(--ink);color:#fff}.btn-primary:hover{transform:translateY(-2px);background:#123a2f}
+.btn-white{background:#fff;color:var(--ink);border-color:rgba(255,255,255,.35)}.btn-white:hover{transform:translateY(-2px)}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(215,31,44,.25)}
+.icon{width:20px;height:20px}.small-icon{width:17px;height:17px}
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.90);backdrop-filter:blur(18px);border-bottom:1px solid rgba(7,27,22,.07)}
+.nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;font-family:"Manrope";font-weight:800;font-size:14px;line-height:1}
+.brand img{width:48px;height:48px;border-radius:50%;object-fit:contain}.brand small{display:block;color:var(--green);font-size:8px;letter-spacing:.18em;margin-top:5px}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-link{display:flex;align-items:center;gap:6px;padding:10px 12px;border-radius:12px;font-size:13px;font-weight:800}
+.nav-link:hover{background:#f0f4f2}
+.nav-item{position:relative}.dropdown{position:absolute;top:calc(100% + 8px);left:0;width:275px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:9px;box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translateY(8px);transition:.2s}
+.nav-item:hover .dropdown,.nav-item:focus-within .dropdown{opacity:1;visibility:visible;transform:none}
+.drop{display:flex;gap:12px;padding:12px;border-radius:13px}.drop:hover{background:#f4f7f5}
+.drop-i{width:36px;height:36px;border-radius:10px;background:#eaf5f0;color:var(--green);display:grid;place-items:center;flex:none}.drop strong{display:block;font-size:13px}.drop span{display:block;color:var(--muted);font-size:11px}
+.menu{display:none;background:none;border:0}
+
+.hero{padding:155px 0 55px;background:
+ radial-gradient(circle at 78% 18%,rgba(8,122,90,.16),transparent 26%),
+ radial-gradient(circle at 8% 55%,rgba(215,31,44,.05),transparent 25%),
+ linear-gradient(180deg,#f8faf8,#fff)}
+.hero-top{display:grid;grid-template-columns:1fr .92fr;align-items:center;gap:65px;min-height:650px}
+.hero-copy h1{margin:20px 0 24px;max-width:800px}.hero-copy h1 em{font-style:normal;color:var(--green)}
+.hero-copy>p{font-size:18px;max-width:690px}
+.hero-actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:30px}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap;margin-top:40px}.hero-stat strong{display:block;font:800 30px "Manrope"}.hero-stat span{font-size:11px;color:var(--muted)}
+.hero-visual{position:relative;min-height:550px;display:grid;place-items:center}
+.visual-core{width:min(475px,85vw);aspect-ratio:1;border-radius:50%;background:linear-gradient(145deg,#fff,#edf5f1);border:1px solid rgba(7,27,22,.07);box-shadow:0 35px 90px rgba(7,27,22,.14);position:relative;display:grid;place-items:center;overflow:hidden}
+.visual-core:before,.visual-core:after{content:"";position:absolute;border:1px dashed rgba(8,122,90,.24);border-radius:50%}
+.visual-core:before{inset:28px}.visual-core:after{inset:78px;border-color:rgba(215,31,44,.16)}
+.core-logo{width:190px;border-radius:50%;position:relative;z-index:2;filter:drop-shadow(0 20px 30px rgba(7,27,22,.12))}
+.orbit{position:absolute;inset:7%;border-radius:50%;animation:spin 18s linear infinite}
+.orbit-dot{position:absolute;width:13px;height:13px;border-radius:50%;background:var(--green);box-shadow:0 0 0 8px rgba(8,122,90,.10);top:2%;left:50%}
+.orbit-dot.r{background:var(--red);top:auto;left:auto;bottom:9%;right:2%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.float{position:absolute;background:#fff;border:1px solid var(--line);box-shadow:0 18px 45px rgba(7,27,22,.13);border-radius:17px;padding:12px 15px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;z-index:4}
+.float i{width:36px;height:36px;border-radius:11px;background:#edf6f2;color:var(--green);display:grid;place-items:center}
+.f1{right:0;top:11%}.f2{left:-8px;bottom:22%}.f3{right:10%;bottom:2%}
+
+.marquee{overflow:hidden;background:var(--ink);color:#fff;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+.marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite;padding:16px 0}
+.marquee span{font:800 12px "Manrope";letter-spacing:.16em;text-transform:uppercase;padding:0 26px;white-space:nowrap}
+.marquee b{color:#54d3a4}@keyframes marquee{to{transform:translateX(-50%)}}
+
+section{padding:110px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:35px;margin-bottom:48px}.section-head p{max-width:560px}
+.dark{background:var(--ink);color:#fff}.dark p{color:#aebfb8}
+.about-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:80px;align-items:start}.about h2{margin:18px 0 24px}
+.about-copy p+p{margin-top:14px}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.10);border-radius:24px;overflow:hidden}
+.metric{background:rgba(255,255,255,.045);padding:30px}.metric strong{display:block;font:800 45px "Manrope"}.metric span{font-size:12px;color:#91a59d}
+.note{margin-top:22px;padding:18px 20px;border-left:3px solid var(--red);background:rgba(255,255,255,.04);font-size:13px;color:#c5d2cd}
+
+.services{background:#f7f9f7}.service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}
+.service{background:#fff;border:1px solid var(--line);border-radius:23px;padding:28px;min-height:295px;position:relative;overflow:hidden;transition:.25s}
+.service:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.service:after{content:"";position:absolute;width:130px;height:130px;border-radius:50%;background:#edf6f2;right:-55px;bottom:-55px}
+.s-icon{width:52px;height:52px;border-radius:15px;background:#edf6f2;color:var(--green);display:grid;place-items:center;margin-bottom:27px}
+.service .tag{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--green);font-weight:800}.service h3{margin:7px 0 12px}.service p{font-size:13px}.service a{position:absolute;bottom:24px;font-size:12px;font-weight:800;color:var(--green)}
+
+.slider-section{background:#fff}.slider{position:relative;border-radius:30px;overflow:hidden;background:var(--ink);min-height:500px;box-shadow:var(--shadow)}
+.slides{position:relative;min-height:500px}.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .7s ease,transform .7s ease;transform:scale(1.025);padding:65px;display:grid;grid-template-columns:1fr .9fr;gap:35px;align-items:center;color:#fff}
+.slide.active{opacity:1;visibility:visible;transform:scale(1)}
+.slide:nth-child(1){background:radial-gradient(circle at 82% 35%,rgba(24,180,123,.35),transparent 30%),linear-gradient(120deg,#071b16,#0d3a2d)}
+.slide:nth-child(2){background:radial-gradient(circle at 75% 40%,rgba(215,31,44,.30),transparent 28%),linear-gradient(120deg,#071b16,#2a1719)}
+.slide:nth-child(3){background:radial-gradient(circle at 82% 30%,rgba(8,122,90,.35),transparent 32%),linear-gradient(120deg,#071b16,#112a38)}
+.slide:nth-child(4){background:radial-gradient(circle at 80% 35%,rgba(255,255,255,.12),transparent 25%),linear-gradient(120deg,#071b16,#241d0e)}
+.slide-copy h2{font-size:clamp(40px,5vw,70px);margin:18px 0}.slide-copy p{color:#b7cbc3;max-width:560px;font-size:16px}.slide-visual{display:grid;place-items:center}
+.visual-card{width:min(430px,100%);aspect-ratio:1.15;border:1px solid rgba(255,255,255,.16);border-radius:28px;background:rgba(255,255,255,.06);backdrop-filter:blur(8px);display:grid;place-items:center;position:relative;overflow:hidden}
+.visual-card:before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;border:1px solid rgba(255,255,255,.15);animation:pulse 3.5s infinite}
+.visual-card .big-icon{width:92px;height:92px;border-radius:27px;background:rgba(255,255,255,.10);display:grid;place-items:center;color:#6fe0b7;z-index:2}
+.code-lines{position:absolute;bottom:28px;left:28px;right:28px;display:grid;gap:7px}.code-lines i{height:6px;border-radius:99px;background:rgba(255,255,255,.18)}.code-lines i:nth-child(1){width:80%}.code-lines i:nth-child(2){width:55%}.code-lines i:nth-child(3){width:70%}
+@keyframes pulse{50%{transform:scale(1.18);opacity:.35}}
+.slider-controls{position:absolute;left:65px;bottom:35px;display:flex;align-items:center;gap:10px;z-index:10}.dot{width:8px;height:8px;border-radius:50%;border:0;background:rgba(255,255,255,.28);cursor:pointer}.dot.active{width:28px;border-radius:20px;background:#fff}.slider-arrows{position:absolute;right:35px;bottom:30px;display:flex;gap:8px;z-index:10}.arrow{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;display:grid;place-items:center;cursor:pointer}.arrow:hover{background:rgba(255,255,255,.16)}
+
+.agent{background:#f6f8f6}.agent-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:center}
+.agent-copy h2{margin:18px 0 22px}.agent-copy p{max-width:600px}.agent-steps{display:grid;gap:10px}
+.agent-step{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px 18px;display:grid;grid-template-columns:44px 1fr;gap:13px;align-items:center;transition:.2s}.agent-step:hover{transform:translateX(5px);box-shadow:0 10px 35px rgba(7,27,22,.07)}
+.agent-num{width:42px;height:42px;border-radius:13px;background:var(--ink);color:#fff;display:grid;place-items:center;font:800 12px "Manrope"}.agent-step strong{display:block;font-size:14px}.agent-step span{display:block;font-size:11px;color:var(--muted)}
+
+.process{background:#fff}.process-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.process-step{border-top:2px solid var(--ink);padding:20px 10px}.process-step .num{color:var(--red);font:800 12px "Manrope"}.process-step h3{font-size:16px;margin:10px 0}.process-step p{font-size:12px}
+
+.tech{background:var(--ink);color:#fff}.tech p{color:#aebfb8}.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.tech-card{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);border-radius:24px;padding:30px}
+.tech-card h3{margin:8px 0 12px}.tech-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.tech-pill{padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.07);font-size:11px;font-weight:800;color:#d4e1dc}
+
+.faq{background:#f7f9f7}.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px}.faq-list{display:grid;gap:10px}
+details{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px 20px}summary{cursor:pointer;font-weight:800;font-size:14px;list-style:none}summary::-webkit-details-marker{display:none}details p{font-size:13px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+
+.contact{background:#fff}.contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px}.contact-copy h2{margin:18px 0}.contact-box{background:var(--ink);color:#fff;border-radius:28px;padding:34px}.contact-box p{color:#aebfb8}.form{display:grid;gap:12px;margin-top:22px}.field{display:grid;gap:6px}.field label{font-size:11px;color:#aebfb8;font-weight:800}.field input,.field textarea{width:100%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;border-radius:12px;padding:13px 14px;outline:none}.field textarea{min-height:125px;resize:vertical}.field input:focus,.field textarea:focus{border-color:#4ed0a0}
+.contact-info{display:grid;gap:13px;margin-top:25px}.contact-line{display:flex;gap:11px;align-items:flex-start}.contact-line i{color:#55d3a5;margin-top:3px}.contact-line strong{display:block;font-size:13px}.contact-line span{font-size:12px;color:#9fb0aa}
+
+.cta{padding:80px 0}.cta-box{border-radius:30px;background:linear-gradient(120deg,var(--ink),#104a3a);color:#fff;padding:65px;display:flex;align-items:center;justify-content:space-between;gap:30px;overflow:hidden;position:relative}.cta-box:after{content:"";position:absolute;width:420px;height:420px;border:1px solid rgba(255,255,255,.09);border-radius:50%;right:-120px;top:-200px}.cta h2{max-width:780px}.cta p{color:#b9cbc4;margin-top:14px}
+
+footer{background:#061510;color:#dbe7e2;padding:70px 0 25px}.footer-grid{display:grid;grid-template-columns:1.4fr .8fr .9fr 1fr;gap:45px}.footer-brand{display:flex;align-items:center;gap:11px;font:800 14px "Manrope";margin-bottom:17px}.footer-brand img{width:48px;height:48px;border-radius:50%}footer p,footer a{color:#91a59d;font-size:13px}footer h4{font-size:12px;color:#fff;margin-bottom:16px;letter-spacing:.08em}footer p{margin:7px 0}.socials{display:flex;gap:8px;margin-top:20px}.social{width:38px;height:38px;border:1px solid rgba(255,255,255,.12);border-radius:12px;display:grid;place-items:center}.copyright{border-top:1px solid rgba(255,255,255,.10);margin-top:50px;padding-top:20px;color:#71877f;font-size:11px;display:flex;justify-content:space-between;gap:15px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}.reveal.show{opacity:1;transform:none}
+.type{display:inline-block;min-width:6ch;border-right:2px solid var(--green);animation:blink .7s infinite}@keyframes blink{50%{border-color:transparent}}
+@media(max-width:1080px){
+ .nav-links{display:none}.menu{display:block}.hero-top,.about-grid,.agent-grid,.faq-grid,.contact-grid{grid-template-columns:1fr}.hero-visual{min-height:470px}
+ .service-grid{grid-template-columns:repeat(2,1fr)}.process-grid{grid-template-columns:repeat(3,1fr)}.tech-grid{grid-template-columns:1fr 1fr}
+ .slide{grid-template-columns:1fr .8fr;padding:45px}.slide-visual{display:none}.slider-controls{left:45px}
+ .footer-grid{grid-template-columns:1.3fr 1fr 1fr}
+}
+@media(max-width:680px){
+ .container{width:min(var(--max),calc(100% - 28px))}.nav{height:68px}.brand img{width:40px;height:40px}
+ .hero{padding-top:120px}.hero-copy>p{font-size:16px}.hero-top{min-height:auto}.hero-visual{min-height:350px}
+ .visual-core{width:320px}.core-logo{width:135px}.float{font-size:10px;padding:9px}.float i{width:30px;height:30px}.f1{right:-2%}.f2{left:-2%}
+ section{padding:75px 0}.section-head{display:block}.section-head p{margin-top:14px}.service-grid{grid-template-columns:1fr}
+ .process-grid{grid-template-columns:1fr 1fr}.tech-grid{grid-template-columns:1fr}.slider,.slides{min-height:560px}.slide{padding:35px 25px;display:block}.slide-copy h2{font-size:42px}.slider-controls{left:25px;bottom:28px}.slider-arrows{right:25px;bottom:20px}
+ .cta-box{display:block;padding:40px 25px}.cta .btn{margin-top:25px}.footer-grid{grid-template-columns:1fr 1fr}.copyright{display:block}.copyright span{display:block;margin-top:8px}
+}
+
+/* === Premium Process Timeline === */
+.process-premium{background:
+ radial-gradient(circle at 10% 15%,rgba(8,122,90,.10),transparent 25%),
+ radial-gradient(circle at 90% 85%,rgba(215,31,44,.07),transparent 25%),#f4f7f4;position:relative;overflow:hidden}
+.process-premium:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(7,27,22,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(7,27,22,.035) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,transparent,#000 15%,#000 85%,transparent)}
+.process-intro{position:relative;z-index:2;max-width:720px}
+.process-timeline{position:relative;margin-top:70px;padding:10px 0 20px}
+.process-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,#18b47b 12%,#087a5a 50%,#d71f2c 88%,transparent);transform:translateX(-50%);box-shadow:0 0 25px rgba(24,180,123,.35)}
+.process-node{position:relative;width:50%;padding:0 70px 70px}
+.process-node:nth-child(odd){padding-right:70px;text-align:right}
+.process-node:nth-child(even){margin-left:50%;padding-left:70px}
+.process-card{position:relative;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border:1px solid rgba(7,27,22,.09);border-radius:26px;padding:28px;box-shadow:0 18px 55px rgba(7,27,22,.08);transition:.35s;overflow:hidden}
+.process-card:before{content:"";position:absolute;inset:-2px;border-radius:28px;padding:1px;background:linear-gradient(135deg,rgba(24,180,123,.0),rgba(24,180,123,.45),rgba(215,31,44,.22),rgba(24,180,123,0));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:.35s}
+.process-card:hover{transform:translateY(-9px) scale(1.015);box-shadow:0 28px 70px rgba(7,27,22,.15)}
+.process-card:hover:before{opacity:1}
+.process-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:#eaf6f1;color:var(--green);font:800 10px "Manrope";letter-spacing:.1em;text-transform:uppercase}
+.process-node:nth-child(4n+2) .process-badge{background:#fff0f1;color:var(--red)}
+.process-card h3{font-size:25px;margin:15px 0 10px}.process-card p{font-size:13px}
+.process-icon{position:absolute;top:30px;width:62px;height:62px;border-radius:19px;display:grid;place-items:center;background:var(--ink);color:#fff;border:6px solid #f4f7f4;box-shadow:0 0 0 1px rgba(7,27,22,.10),0 10px 30px rgba(7,27,22,.18);z-index:3}
+.process-node:nth-child(odd) .process-icon{right:-31px}
+.process-node:nth-child(even) .process-icon{left:-31px}
+.process-number{font:800 11px "Manrope";opacity:.8}
+.process-orb{position:absolute;width:360px;height:360px;border-radius:50%;filter:blur(35px);opacity:.08;background:#18b47b;right:-150px;top:25%}
+.process-orb.two{background:#d71f2c;left:-150px;right:auto;top:60%}
+
+/* === Platforms Ecosystem === */
+.platforms{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.platforms:before{content:"";position:absolute;width:650px;height:650px;border-radius:50%;border:1px solid rgba(255,255,255,.06);right:-240px;top:-220px}
+.platforms:after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;border:1px solid rgba(24,180,123,.13);left:-220px;bottom:-180px}
+.platform-head{position:relative;z-index:2}
+.platform-head p{color:#aebfb8;max-width:620px}
+.platform-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-top:45px;position:relative;z-index:2}
+.platform-card{min-height:285px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border-radius:24px;padding:24px;position:relative;overflow:hidden;transition:.4s}
+.platform-card:before{content:"";position:absolute;width:160px;height:160px;border-radius:50%;right:-75px;bottom:-75px;background:rgba(24,180,123,.18);transition:.4s}
+.platform-card:hover{transform:translateY(-10px);border-color:rgba(99,215,174,.45);box-shadow:0 25px 70px rgba(0,0,0,.24)}
+.platform-card:hover:before{transform:scale(1.6)}
+.platform-icon{width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.08);color:#62d4ad;display:grid;place-items:center;margin-bottom:26px}
+.platform-card.red .platform-icon{color:#ff737e}.platform-card.gold .platform-icon{color:#e9d27b}
+.platform-card h3{font-size:21px;margin-bottom:10px}.platform-card p{font-size:12px;color:#aebfb8}
+.platform-link{position:absolute;left:24px;bottom:22px;font-size:11px;font-weight:800;color:#70dfb7;z-index:2}
+.platform-url{display:block;margin-top:10px;color:#6f8e84;font-size:10px}
+.ecosystem-core{margin:45px auto 0;max-width:900px;border:1px solid rgba(255,255,255,.10);border-radius:28px;padding:28px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;background:rgba(255,255,255,.035);position:relative;z-index:2}
+.eco-pill{display:flex;align-items:center;gap:9px;padding:10px 13px;border-radius:999px;background:rgba(255,255,255,.06);font-size:11px;font-weight:800;color:#d7e4df}
+.eco-pill i{color:#62d4ad}
+
+/* animated section reveal */
+.spark{position:absolute;width:5px;height:5px;border-radius:50%;background:#62d4ad;box-shadow:0 0 15px #62d4ad;animation:floatSpark 5s infinite ease-in-out;opacity:.5}
+.spark.s1{left:18%;top:30%}.spark.s2{left:78%;top:20%;animation-delay:1.4s}.spark.s3{left:62%;top:78%;animation-delay:2.2s}
+@keyframes floatSpark{0%,100%{transform:translateY(0) scale(1);opacity:.25}50%{transform:translateY(-35px) scale(1.8);opacity:.8}}
+
+
+@media(max-width:1080px){
+ .platform-grid{grid-template-columns:repeat(2,1fr)}
+ .process-node,.process-node:nth-child(even){width:100%;margin-left:0;padding:0 0 45px 78px;text-align:left}
+ .process-line{left:30px}
+ .process-node:nth-child(odd) .process-icon,.process-node:nth-child(even) .process-icon{left:0;right:auto}
+}
+@media(max-width:680px){
+ .platform-grid{grid-template-columns:1fr}.platform-card{min-height:260px}
+ .process-timeline{margin-top:45px}.process-node,.process-node:nth-child(even){padding-left:62px}
+ .process-line{left:25px}.process-node:nth-child(odd) .process-icon,.process-node:nth-child(even) .process-icon{left:-6px}
+ .process-icon{width:58px;height:58px}.process-card{padding:23px}.process-card h3{font-size:21px}
+}
+
+</style>
+</head>
+<body>
+<header>
+<div class="container nav">
+<a class="brand" href="#top"><img src="assets/lamassat-logo.png" alt="Lamassat Digital"><span>LAMASSAT BUSINESS GROUP LLC<small>LAMASSAT DIGITAL · TECHNOLOGY & AUTOMATION</small></span></a>
+<nav class="nav-links">
+<div class="nav-item"><a class="nav-link" href="#services">Services <span>⌄</span></a><div class="dropdown">
+<a class="drop" href="#services"><i class="drop-i" data-lucide="code-2"></i><span><strong>Custom Software</strong><span>Web apps, APIs & internal tools</span></span></a>
+<a class="drop" href="#services"><i class="drop-i" data-lucide="bot"></i><span><strong>AI Agents</strong><span>Research, decide & act</span></span></a>
+<a class="drop" href="#services"><i class="drop-i" data-lucide="workflow"></i><span><strong>Workflow Automation</strong><span>Connect tools & data</span></span></a>
+<a class="drop" href="#services"><i class="drop-i" data-lucide="plug-zap"></i><span><strong>Custom Integrations</strong><span>Unified digital stacks</span></span></a>
+</div></div>
+<div class="nav-item"><a class="nav-link" href="#solutions">Solutions <span>⌄</span></a><div class="dropdown">
+<a class="drop" href="#solutions"><i class="drop-i" data-lucide="layers-3"></i><span><strong>SaaS Platforms</strong><span>Products built to scale</span></span></a>
+<a class="drop" href="#solutions"><i class="drop-i" data-lucide="brain-circuit"></i><span><strong>Intelligent Systems</strong><span>AI-powered workflows</span></span></a>
+<a class="drop" href="#solutions"><i class="drop-i" data-lucide="database-zap"></i><span><strong>Data & APIs</strong><span>Systems that work together</span></span></a>
+</div></div>
+<div class="nav-item"><a class="nav-link" href="#platforms">Platforms <span>⌄</span></a><div class="dropdown">
+<a class="drop" href="#platforms"><i class="drop-i" data-lucide="globe-2"></i><span><strong>MACIR Online</strong><span>Digital platform ecosystem</span></span></a>
+<a class="drop" href="#platforms"><i class="drop-i" data-lucide="briefcase-business"></i><span><strong>MACIR B2B</strong><span>Business-to-business platform</span></span></a>
+<a class="drop" href="#platforms"><i class="drop-i" data-lucide="map-pin"></i><span><strong>MACIR Local</strong><span>Local digital platform</span></span></a>
+<a class="drop" href="#platforms"><i class="drop-i" data-lucide="sparkles"></i><span><strong>Fassaha Arabic</strong><span>Arabic language platform</span></span></a>
+<a class="drop" href="#platforms"><i class="drop-i" data-lucide="cpu"></i><span><strong>Lamassat Digital</strong><span>Technology, SaaS & AI</span></span></a>
+</div></div>
+<div class="nav-item"><a class="nav-link" href="#process">How We Work <span>⌄</span></a><div class="dropdown">
+<a class="drop" href="#process"><i class="drop-i" data-lucide="route"></i><span><strong>Six-Step Process</strong><span>From strategy to growth</span></span></a>
+<a class="drop" href="#agent-core"><i class="drop-i" data-lucide="bot"></i><span><strong>Agent Core</strong><span>Audit to autonomous workflows</span></span></a>
+</div></div>
+<a class="nav-link" href="#about">About</a><a class="nav-link" href="#faq">FAQ</a><a class="nav-link" href="#contact">Contact</a>
+</nav>
+<a class="btn btn-primary" href="#contact">Start a project <i class="small-icon" data-lucide="arrow-up-right"></i></a>
+<button class="menu" aria-label="Menu"><i class="icon" data-lucide="menu"></i></button>
+</div>
+</header>
+
+<main id="top">
+<section class="hero">
+<div class="container hero-top">
+<div class="hero-copy reveal">
+<span class="eyebrow">Lamassat Digital · Technology Branch</span>
+<h1>Intelligent software & <em><span class="type" id="typed">automation</span></em>, built to scale.</h1>
+<p>We build custom software, AI agents, SaaS platforms, and automation systems that eliminate bottlenecks and help ambitious teams ship faster with less effort.</p>
+<div class="hero-actions"><a class="btn btn-primary" href="#services">Explore services <i class="small-icon" data-lucide="arrow-right"></i></a><a class="btn" style="background:#fff;border-color:var(--line)" href="#contact">Talk to an engineer</a></div>
+<div class="hero-stats"><div class="hero-stat"><strong>80+</strong><span>Systems shipped</span></div><div class="hero-stat"><strong>15+</strong><span>Industries served</span></div><div class="hero-stat"><strong>10y</strong><span>In the making</span></div></div>
+</div>
+<div class="hero-visual reveal">
+<div class="visual-core"><div class="orbit"><i class="orbit-dot"></i><i class="orbit-dot r"></i></div><img class="core-logo" src="assets/lamassat-logo.png" alt="Lamassat Digital logo"></div>
+<div class="float f1"><i><svg class="small-icon" data-lucide="bot"></svg></i> AI Agents</div>
+<div class="float f2"><i><svg class="small-icon" data-lucide="workflow"></svg></i> Automation</div>
+<div class="float f3"><i><svg class="small-icon" data-lucide="cloud-cog"></svg></i> SaaS & Cloud</div>
+</div>
+</div>
+</section>
+
+<div class="marquee"><div class="marquee-track">
+<span>Custom Software <b>✦</b></span><span>AI Agents <b>✦</b></span><span>Workflow Automation <b>✦</b></span><span>Custom Integrations <b>✦</b></span><span>SaaS Platforms <b>✦</b></span><span>Intelligent Systems <b>✦</b></span>
+<span>Custom Software <b>✦</b></span><span>AI Agents <b>✦</b></span><span>Workflow Automation <b>✦</b></span><span>Custom Integrations <b>✦</b></span><span>SaaS Platforms <b>✦</b></span><span>Intelligent Systems <b>✦</b></span>
+</div></div>
+
+<section class="dark" id="about">
+<div class="container about-grid">
+<div class="about-copy reveal"><span class="eyebrow" style="color:#62d4ad">About Lamassat Digital</span><h2>Engineers obsessed with automation.</h2>
+<p>We are a software engineering team helping startups and scaling companies replace manual work with intelligent systems — custom software, AI agents, and automated pipelines that run while you sleep.</p>
+<p>From a single integration to a fully autonomous workflow, we design and build systems that are reliable, observable, and easy for your team to own long-term.</p>
+<div class="note">Lamassat Digital is positioned as the technology and digital solutions branch within the wider Lamassat Business Group ecosystem.</div>
+</div>
+<div class="metrics reveal">
+<div class="metric"><strong>80+</strong><span>Systems shipped</span></div><div class="metric"><strong>15+</strong><span>Industries served</span></div><div class="metric"><strong>6</strong><span>Core delivery stages</span></div><div class="metric"><strong>AI</strong><span>Intelligence layer</span></div>
+</div>
+</div>
+</section>
+
+<section class="services" id="services">
+<div class="container">
+<div class="section-head reveal"><div><span class="eyebrow">What we do</span><h2 style="margin-top:17px">Software that removes<br>the bottlenecks.</h2></div><p>Pick a capability to get started — then turn the idea into a clear technical plan, a working product, and a system your team can own.</p></div>
+<div class="service-grid">
+<article class="service reveal"><div class="s-icon"><i data-lucide="code-2"></i></div><span class="tag">Development · Engineering</span><h3>Custom Software</h3><p>Full-stack web apps, APIs, dashboards, portals and internal tools engineered to scale with your business.</p><a href="#contact">Get started →</a></article>
+<article class="service reveal"><div class="s-icon"><i data-lucide="bot"></i></div><span class="tag">Artificial Intelligence</span><h3>AI Agents</h3><p>Autonomous agents that research, decide, and act — end-to-end, with guardrails and human oversight where it matters.</p><a href="#agent-core">Explore agents →</a></article>
+<article class="service reveal"><div class="s-icon"><i data-lucide="workflow"></i></div><span class="tag">Process · Efficiency</span><h3>Workflow Automation</h3><p>Eliminate repetitive work with smart pipelines that connect your tools, data, people and business rules.</p><a href="#solutions">Automate a workflow →</a></article>
+<article class="service reveal"><div class="s-icon"><i data-lucide="plug-zap"></i></div><span class="tag">Connectivity · APIs</span><h3>Custom Integrations</h3><p>Unified, automated stacks that make your existing software work seamlessly together.</p><a href="#solutions">Connect systems →</a></article>
+</div>
+</div>
+</section>
+
+<section class="slider-section" id="solutions">
+<div class="container">
+<div class="section-head reveal"><div><span class="eyebrow">Solutions in motion</span><h2 style="margin-top:17px">Build. Automate.<br>Scale.</h2></div><p>A larger visual showcase for the technology capabilities behind Lamassat Digital.</p></div>
+<div class="slider reveal">
+<div class="slides">
+<article class="slide active"><div class="slide-copy"><span class="eyebrow" style="color:#63d7ae">01 · Custom Software</span><h2>From idea to production-ready product.</h2><p>Full-stack applications, APIs and internal tools engineered with quality, scalability and transparency at every stage.</p><div style="margin-top:25px"><a class="btn btn-white" href="#contact">Build your product <i class="small-icon" data-lucide="arrow-up-right"></i></a></div></div><div class="slide-visual"><div class="visual-card"><div class="big-icon"><i style="width:44px;height:44px" data-lucide="code-2"></i></div><div class="code-lines"><i></i><i></i><i></i></div></div></div></article>
+<article class="slide"><div class="slide-copy"><span class="eyebrow" style="color:#ff7580">02 · AI Agents</span><h2>Give your workflows an intelligent layer.</h2><p>Research, decision-making and execution can be orchestrated through agents designed around your tools, data and operating rules.</p><div style="margin-top:25px"><a class="btn btn-white" href="#agent-core">See the agent core <i class="small-icon" data-lucide="arrow-right"></i></a></div></div><div class="slide-visual"><div class="visual-card"><div class="big-icon"><i style="width:44px;height:44px" data-lucide="brain-circuit"></i></div><div class="code-lines"><i></i><i></i><i></i></div></div></div></article>
+<article class="slide"><div class="slide-copy"><span class="eyebrow" style="color:#63d7ae">03 · Automation</span><h2>Make repetitive work disappear.</h2><p>Connect your systems and data into observable pipelines that run consistently, reduce manual work and improve operational speed.</p><div style="margin-top:25px"><a class="btn btn-white" href="#contact">Automate a process <i class="small-icon" data-lucide="arrow-up-right"></i></a></div></div><div class="slide-visual"><div class="visual-card"><div class="big-icon"><i style="width:44px;height:44px" data-lucide="workflow"></i></div><div class="code-lines"><i></i><i></i><i></i></div></div></div></article>
+<article class="slide"><div class="slide-copy"><span class="eyebrow" style="color:#e9d27b">04 · SaaS & Integrations</span><h2>One connected digital stack.</h2><p>Turn business logic into SaaS experiences and integrate the tools you already use into a unified, scalable environment.</p><div style="margin-top:25px"><a class="btn btn-white" href="#contact">Design your stack <i class="small-icon" data-lucide="arrow-up-right"></i></a></div></div><div class="slide-visual"><div class="visual-card"><div class="big-icon"><i style="width:44px;height:44px" data-lucide="layers-3"></i></div><div class="code-lines"><i></i><i></i><i></i></div></div></div></article>
+</div>
+<div class="slider-controls" id="dots"></div>
+<div class="slider-arrows"><button class="arrow" id="prev"><i class="small-icon" data-lucide="arrow-left"></i></button><button class="arrow" id="next"><i class="small-icon" data-lucide="arrow-right"></i></button></div>
+</div>
+</div>
+</section>
+
+<section class="agent" id="agent-core">
+<div class="container agent-grid">
+<div class="agent-copy reveal"><span class="eyebrow">How it works</span><h2>One core.<br>Every workflow.</h2><p>A single agent core orchestrates the journey — from first audit to automation that scales with you. We map workflows, design the right system, connect tools and validate everything before production.</p><div style="margin-top:27px"><a class="btn btn-primary" href="#contact">Book a free audit <i class="small-icon" data-lucide="arrow-right"></i></a></div></div>
+<div class="agent-steps reveal">
+<div class="agent-step"><div class="agent-num">01</div><div><strong>Discovery & Audit</strong><span>Map workflows and pinpoint where agents create the most value.</span></div></div>
+<div class="agent-step"><div class="agent-num">02</div><div><strong>Solution Design</strong><span>Define agents, integrations, permissions and guardrails.</span></div></div>
+<div class="agent-step"><div class="agent-num">03</div><div><strong>Build & Integrate</strong><span>Develop agents and connect them to tools, data and APIs.</span></div></div>
+<div class="agent-step"><div class="agent-num">04</div><div><strong>Test & Validate</strong><span>Sandbox runs, accuracy checks and safety rails before shipping.</span></div></div>
+<div class="agent-step"><div class="agent-num">05</div><div><strong>Deploy & Launch</strong><span>Go live with monitoring and a human in the loop.</span></div></div>
+<div class="agent-step"><div class="agent-num">06</div><div><strong>Optimize & Scale</strong><span>Continuous tuning and new workflows so automation compounds.</span></div></div>
+</div>
+</div>
+</section>
+
+
+<section class="process-premium" id="premium-process">
+<div class="container">
+<div class="process-intro reveal"><span class="eyebrow">The Lamassat Digital Method</span><h2 style="margin-top:17px">From first idea to intelligent operation.</h2><p style="margin-top:18px">A cinematic six-stage journey designed to move a project from strategy to production, then turn the finished system into an engine for continuous growth.</p></div>
+<div class="process-timeline">
+<div class="process-line"></div><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="process-orb"></span><span class="process-orb two"></span>
+
+<div class="process-node reveal"><div class="process-icon"><i data-lucide="search"></i></div><div class="process-card"><span class="process-badge"><span class="process-number">01</span> Discovery</span><h3>Discover & Audit</h3><p>We map the business, workflows, bottlenecks, users and opportunities before a single line of production code is written.</p></div></div>
+
+<div class="process-node reveal"><div class="process-icon"><i data-lucide="pen-tool"></i></div><div class="process-card"><span class="process-badge"><span class="process-number">02</span> Strategy</span><h3>Architect the Solution</h3><p>We transform the idea into a practical architecture, product roadmap, experience and automation strategy.</p></div></div>
+
+<div class="process-node reveal"><div class="process-icon"><i data-lucide="code-2"></i></div><div class="process-card"><span class="process-badge"><span class="process-number">03</span> Engineering</span><h3>Build & Integrate</h3><p>Software, APIs, SaaS modules and AI workflows are engineered and connected into one coherent digital system.</p></div></div>
+
+<div class="process-node reveal"><div class="process-icon"><i data-lucide="shield-check"></i></div><div class="process-card"><span class="process-badge"><span class="process-number">04</span> Intelligence</span><h3>Test & Validate</h3><p>We test functionality, data flows, AI behavior, permissions and edge cases before the system reaches production.</p></div></div>
+
+<div class="process-node reveal"><div class="process-icon"><i data-lucide="rocket"></i></div><div class="process-card"><span class="process-badge"><span class="process-number">05</span> Launch</span><h3>Deploy & Activate</h3><p>The system goes live with monitoring, documentation and the operational structure needed for a smooth launch.</p></div></div>
+
+<div class="process-node reveal"><div class="process-icon"><i data-lucide="trending-up"></i></div><div class="process-card"><span class="process-badge"><span class="process-number">06</span> Evolution</span><h3>Optimize & Scale</h3><p>We measure, improve, automate more workflows and expand the platform as the business grows.</p></div></div>
+</div>
+</div>
+</section>
+
+<section class="process" id="process">
+<div class="container">
+<div class="section-head reveal"><div><span class="eyebrow">Delivery methodology</span><h2 style="margin-top:17px">Our six-step process.</h2></div><p>A proven methodology — from first conversation to a live, automated system running in production.</p></div>
+<div class="process-grid">
+<div class="process-step reveal"><span class="num">01</span><h3>Discovery & Strategy</h3><p>Understand goals and vision to design the right solution.</p></div>
+<div class="process-step reveal"><span class="num">02</span><h3>Planning & Design</h3><p>Wireframes and user-centric designs that set the foundation.</p></div>
+<div class="process-step reveal"><span class="num">03</span><h3>Development</h3><p>Agile coding with quality, scalability and transparency.</p></div>
+<div class="process-step reveal"><span class="num">04</span><h3>Test & Quality</h3><p>Rigorous testing for a stable, secure product.</p></div>
+<div class="process-step reveal"><span class="num">05</span><h3>Launch & Delivery</h3><p>Smooth deployment with support for a successful launch.</p></div>
+<div class="process-step reveal"><span class="num">06</span><h3>Support & Growth</h3><p>Maintenance, updates and optimisation after launch.</p></div>
+</div>
+</div>
+</section>
+
+<section class="tech">
+<div class="container">
+<div class="section-head reveal"><div><span class="eyebrow" style="color:#63d7ae">Technology direction</span><h2 style="margin-top:17px">A stack designed<br>to stay connected.</h2></div><p>Technology choices should serve the product. This section is intentionally structured so the exact technologies can be added later as the engineering stack is finalized.</p></div>
+<div class="tech-grid">
+<div class="tech-card reveal"><span class="eyebrow" style="color:#63d7ae">Product layer</span><h3>Web · SaaS · Applications</h3><p>Interfaces and product experiences built around real workflows and users.</p><div class="tech-list"><span class="tech-pill">Web Apps</span><span class="tech-pill">SaaS</span><span class="tech-pill">Dashboards</span><span class="tech-pill">Portals</span><span class="tech-pill">Internal Tools</span></div></div>
+<div class="tech-card reveal"><span class="eyebrow" style="color:#63d7ae">Intelligence layer</span><h3>AI · Agents · Automation</h3><p>Intelligent systems that reason, orchestrate and execute defined business tasks.</p><div class="tech-list"><span class="tech-pill">AI Agents</span><span class="tech-pill">Workflow Automation</span><span class="tech-pill">APIs</span><span class="tech-pill">Guardrails</span><span class="tech-pill">Monitoring</span></div></div>
+</div>
+</div>
+</section>
+
+
+<section class="platforms" id="platforms">
+<div class="container">
+<div class="platform-head reveal"><span class="eyebrow" style="color:#63d7ae">Our Digital Ecosystem</span><h2 style="margin-top:17px">Platforms built for<br>different worlds.</h2><p style="margin-top:18px">Lamassat Digital operates as the technology branch within Lamassat Business Group, building and supporting a growing ecosystem of digital platforms and SaaS products.</p></div>
+<div class="platform-grid">
+<article class="platform-card reveal"><div class="platform-icon"><i data-lucide="globe-2"></i></div><span class="eyebrow" style="color:#63d7ae">Platform 01</span><h3>MACIR Online</h3><p>A digital platform within the MACIR ecosystem, designed for connected online services and scalable digital operations.</p><span class="platform-url">macir.online</span><a class="platform-link" href="https://macir.online" target="_blank">Visit platform →</a></article>
+<article class="platform-card red reveal"><div class="platform-icon"><i data-lucide="briefcase-business"></i></div><span class="eyebrow" style="color:#ff737e">Platform 02</span><h3>MACIR B2B</h3><p>A business-focused platform layer designed around B2B relationships, services, workflows and digital connectivity.</p><span class="platform-url">b2b.macir.online</span><a class="platform-link" href="https://b2b.macir.online" target="_blank">Visit platform →</a></article>
+<article class="platform-card reveal"><div class="platform-icon"><i data-lucide="map-pin"></i></div><span class="eyebrow" style="color:#63d7ae">Platform 03</span><h3>MACIR Local</h3><p>A local digital platform experience connecting location-aware services, businesses and users.</p><span class="platform-url">local.macir.online</span><a class="platform-link" href="https://local.macir.online" target="_blank">Visit platform →</a></article>
+<article class="platform-card gold reveal"><div class="platform-icon"><i data-lucide="sparkles"></i></div><span class="eyebrow" style="color:#e9d27b">Platform 04</span><h3>Fassaha Arabic</h3><p>A dedicated Arabic-language digital platform focused on learning, communication and accessible language experiences.</p><span class="platform-url">fassahaarabic.com</span><a class="platform-link" href="https://fassahaarabic.com" target="_blank">Visit platform →</a></article>
+<article class="platform-card reveal"><div class="platform-icon"><i data-lucide="cpu"></i></div><span class="eyebrow" style="color:#63d7ae">Technology Branch</span><h3>Lamassat Digital</h3><p>The technology and digital solutions arm delivering software, SaaS, AI agents, automation and integrations.</p><span class="platform-url">lamassatdigital.online</span><a class="platform-link" href="https://lamassatdigital.online" target="_blank">Visit platform →</a></article>
+</div>
+<div class="ecosystem-core reveal">
+<span class="eco-pill"><i data-lucide="layers-3"></i> SaaS Platforms</span>
+<span class="eco-pill"><i data-lucide="bot"></i> AI Agents</span>
+<span class="eco-pill"><i data-lucide="workflow"></i> Automation</span>
+<span class="eco-pill"><i data-lucide="plug-zap"></i> Integrations</span>
+<span class="eco-pill"><i data-lucide="database-zap"></i> APIs & Data</span>
+</div>
+</div>
+</section>
+
+<section class="faq" id="faq">
+<div class="container faq-grid">
+<div class="reveal"><span class="eyebrow">FAQ</span><h2 style="margin-top:17px">Got questions?</h2><p style="margin-top:18px">A concise starting point. We can expand this page later with detailed technical and commercial answers.</p></div>
+<div class="faq-list reveal">
+<details open><summary>How long does a typical project take?</summary><p>Project timing depends on scope, integrations, product complexity and validation requirements. The first step is a discovery conversation that defines the work.</p></details>
+<details><summary>Do you work with early-stage startups?</summary><p>Yes. The service structure is suitable for a focused integration, an MVP, an internal system or a larger production platform.</p></details>
+<details><summary>What does the process look like after we agree to work together?</summary><p>We move through discovery, planning and design, development, testing, launch, then ongoing support and growth.</p></details>
+<details><summary>Who owns the code when the project is done?</summary><p>Ownership terms should be defined in the project agreement and can be structured around the client's business requirements.</p></details>
+<details><summary>Can you maintain and scale the system after launch?</summary><p>Yes. Support, updates, optimisation and growth are part of the six-step service model.</p></details>
+<details><summary>What if an AI agent doesn't perform as expected?</summary><p>Agents should be tested in controlled environments with accuracy checks, guardrails, monitoring and human oversight before production deployment.</p></details>
+</div>
+</div>
+</section>
+
+<section class="contact" id="contact">
+<div class="container contact-grid">
+<div class="contact-copy reveal"><span class="eyebrow">Contact</span><h2>Let's build something good.</h2><p>Tell us about your project, your timeline, and what success looks like. We'll start with the right questions and a clear next step.</p>
+<div class="contact-info">
+<div class="contact-line"><i class="small-icon" data-lucide="mail"></i><div><strong>Email</strong><span>info@lamassatdigital.online</span></div></div>
+<div class="contact-line"><i class="small-icon" data-lucide="globe-2"></i><div><strong>Digital branch</strong><span>lamassatdigital.online</span></div></div>
+<div class="contact-line"><i class="small-icon" data-lucide="building-2"></i><div><strong>Group</strong><span>Lamassat Business Group LLC · USA</span></div></div>
+</div>
+</div>
+<div class="contact-box reveal">
+<span class="eyebrow" style="color:#63d7ae">Start a conversation</span>
+<form class="form" id="contactForm">
+<div class="field"><label>Name</label><input id="name" required placeholder="Your name"></div>
+<div class="field"><label>Email</label><input id="email" type="email" required placeholder="you@company.com"></div>
+<div class="field"><label>Project / Message</label><textarea id="message" required placeholder="Tell us what you want to build..."></textarea></div>
+<button class="btn btn-red" type="submit">Send message <i class="small-icon" data-lucide="send"></i></button>
+</form>
+</div>
+</div>
+</section>
+
+<section class="cta"><div class="container"><div class="cta-box reveal"><div><span class="eyebrow" style="color:#63d7ae">Ready when you are</span><h2 style="margin-top:17px">Turn manual work into intelligent systems.</h2><p>From one integration to a complete automated workflow, let's design the next version of your operation.</p></div><a class="btn btn-red" href="#contact">Talk to Lamassat Digital <i class="small-icon" data-lucide="arrow-up-right"></i></a></div></div></section>
+</main>
+
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div><div class="footer-brand"><img src="assets/lamassat-logo.png" alt=""><span>LAMASSAT BUSINESS GROUP LLC</span></div><p>Technology, AI, SaaS and automation branch@Lamassat_Digital</p><div class="socials"><a class="social" href="mailto:info@lamassatgroup.com"><i class="small-icon" data-lucide="mail"></i></a><a class="social" href="https://lamassatgroup.online" target="_blank"><i class="small-icon" data-lucide="globe-2"></i></a></div></div>
+<div><h4>SERVICES</h4><p><a href="#services">Custom Software</a></p><p><a href="#services">AI Agents</a></p><p><a href="#services">Automation</a></p><p><a href="#services">Integrations</a></p></div>
+<div><h4>COMPANY</h4><p><a href="#about">About</a></p><p><a href="#process">Process</a></p><p><a href="#agent-core">How It Works</a></p><p><a href="#faq">FAQ</a></p><p><a href="#platforms">Platforms</a></p></div>
+<div><h4>OUR PLATFORMS</h4><p><a href="https://macir.online" target="_blank">MACIR Online</a></p><p><a href="https://b2b.macir.online" target="_blank">MACIR B2B</a></p><p><a href="https://local.macir.online" target="_blank">MACIR Local</a></p><p><a href="https://fassahaarabic.online" target="_blank">Fassaha Arabic</a></p></div>
+<div><h4>CONTACT</h4><p><a href="mailto:info@lamassatgroup.online">info@lamassatgroup.online</a></p><p><a href="https://lamassatgroup.online" target="_blank">lamassatgroup.online</a></p><p>Lamassat Business Group LLC<br>Wyoming, USA</p></div>
+
+<div><h4>ABOUT PLATFORMS</h4><p><a href="https://lamassatgroup.online/privacypolicy" target="_blank">Privacy Policy</a></p><p><a href="https://lamassatgroup.online/terms" target="_blank">Terms and Conditions</a></p><p><a href="https://lamassatgroup.online/costumers" target="_blank">Costumers</a></p><p><a href="https://lamassatgroup.online/payments" target="_blank">Payments</a></p></div>
+</div>
+<div class="copyright"><span>© 2026 Lamassat Digital. All rights reserved.</span><span>A Lamassat Business Group technology branch.</span></div>
+</div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+lucide.createIcons();
+
+/* Mobile navigation */
+document.querySelector('.menu').addEventListener('click',()=>{
+ const nav=document.querySelector('.nav-links');
+ const open=nav.dataset.open==='1';
+ nav.dataset.open=open?'0':'1';
+ if(!open){
+  nav.style.display='flex';nav.style.position='absolute';nav.style.top='68px';nav.style.left='14px';nav.style.right='14px';
+  nav.style.padding='10px';nav.style.background='#fff';nav.style.border='1px solid rgba(7,27,22,.1)';
+  nav.style.borderRadius='18px';nav.style.boxShadow='0 20px 50px rgba(7,27,22,.12)';
+  nav.style.flexDirection='column';nav.style.alignItems='stretch';
+ }else nav.style.display='none';
+});
+
+/* Animated rotating headline */
+const words=['automation','AI agents','SaaS','software'];
+let wi=0, ci=0, deleting=false;
+const typed=document.getElementById('typed');
+function typeLoop(){
+ const word=words[wi];
+ if(!deleting){ci++;typed.textContent=word.slice(0,ci);if(ci===word.length){deleting=true;setTimeout(typeLoop,1200);return}}
+ else {ci--;typed.textContent=word.slice(0,ci);if(ci===0){deleting=false;wi=(wi+1)%words.length}}
+ setTimeout(typeLoop,deleting?55:90);
+}
+typeLoop();
+
+/* Slider */
+const slides=[...document.querySelectorAll('.slide')], dots=document.getElementById('dots');
+let current=0, timer;
+slides.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i===0?' active':'');d.setAttribute('aria-label','Show slide '+(i+1));d.onclick=()=>go(i);dots.appendChild(d)});
+const dotEls=[...dots.children];
+function go(i){current=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle('active',n===current));dotEls.forEach((d,n)=>d.classList.toggle('active',n===current));clearInterval(timer);timer=setInterval(()=>go(current+1),6000)}
+document.getElementById('next').onclick=()=>go(current+1);
+document.getElementById('prev').onclick=()=>go(current-1);
+timer=setInterval(()=>go(current+1),6000);
+
+/* Scroll reveal */
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* Contact mailto */
+document.getElementById('contactForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const name=document.getElementById('name').value.trim();
+ const email=document.getElementById('email').value.trim();
+ const message=document.getElementById('message').value.trim();
+ const subject=encodeURIComponent('Lamassat Digital Project Inquiry — '+name);
+ const body=encodeURIComponent('Name: '+name+'\\nEmail: '+email+'\\n\\nProject / Message:\\n'+message);
+ window.location.href='mailto:info@lamassatgroup.online?subject='+subject+'&body='+body;
+});
+</script>
+</body>
+</html>
