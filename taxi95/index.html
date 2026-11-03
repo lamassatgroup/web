@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101310"><meta name="description" content="Taxi 9.5 — Réservez votre trajet dans le Val-d’Oise et vers l’aéroport Paris-Charles-de-Gaulle.">
+<title>Taxi 9.5 — Réservation</title>
+<style>
+:root {
+  --site-primary: #087F55;
+  --site-secondary: #E8C72D;
+  --site-background: #101310;
+  --site-on-primary: #FFFFFF;
+  --site-on-secondary: #17170D;
+  --site-on-background: #F7F7F1;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Inter, ui-sans-serif, system-ui, sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  --ink: light-dark(#18211C, #F5F7F3);
+  --muted: light-dark(#68736C, #A6B0A8);
+  --panel: light-dark(#FFFFFF, #1B211D);
+  --soft: light-dark(#F1F5F1, #242D27);
+  --line: light-dark(#DFE7E0, #354139);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; color-scheme: light dark; }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); }
+#app { width: 100%; min-height: 100vh; background-color: var(--site-background); color: var(--site-on-background); border-radius: 0; overflow: hidden; }
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; }
+.container { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+.topbar { display:flex; align-items:center; justify-content:space-between; padding: 17px 0; gap: 18px; }
+.brand { display:flex; align-items:center; gap:12px; font-weight:850; letter-spacing:.04em; }
+.brand img { width:58px; height:58px; object-fit:cover; border-radius:50%; border:2px solid var(--site-secondary); }
+.brand small { display:block; font-size:10px; color:#B7C1B9; letter-spacing:.18em; margin-top:3px; }
+.nav { display:flex; align-items:center; gap:24px; color:#D8E0D9; font-size:13px; }
+.nav a:hover { color:var(--site-secondary); }
+.lang { border:1px solid #536157; border-radius:30px; padding:8px 13px; color:white; background:#202821; cursor:pointer; font-weight:750; }
+.hero { position:relative; padding:65px 0 72px; background: radial-gradient(ellipse at 78% 30%, rgba(232,199,45,.16), transparent 35%), linear-gradient(115deg,#111712 0%,#1B2920 55%,#101410 100%); }
+.hero:before { content:""; position:absolute; width:360px; height:360px; border:1px solid rgba(8,127,85,.35); border-radius:50%; right:-120px; top:-170px; opacity:var(--site-decoration-opacity); }
+.hero-grid { display:grid; grid-template-columns:1.02fr .98fr; align-items:center; gap:48px; position:relative; }
+.eyebrow { display:inline-flex; align-items:center; gap:9px; color:#EBD75C; text-transform:uppercase; letter-spacing:.17em; font-size:11px; font-weight:800; }
+.dot { width:7px; height:7px; border-radius:50%; background:#13A56E; box-shadow:0 0 0 5px rgba(19,165,110,.13); }
+h1 { font-family:var(--site-font-heading); font-size:clamp(42px,5.3vw,68px); line-height:1.02; letter-spacing:-.055em; margin:20px 0 18px; }
+h1 span { color:var(--site-secondary); }
+.hero-copy { color:#BFCAC1; max-width:510px; line-height:1.8; font-size:16px; }
+.hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:27px; }
+.btn { display:inline-flex; justify-content:center; align-items:center; gap:9px; border:0; border-radius:13px; padding:14px 19px; font-weight:800; cursor:pointer; transition:transform .2s,filter .2s; }
+.btn:hover { transform:translateY(-2px); filter:brightness(1.06); }
+.btn-primary { background:var(--site-secondary); color:#18170D; }
+.btn-outline { border:1px solid #58665B; color:#F7F7F1; background:rgba(255,255,255,.04); }
+.hero-visual { min-height:335px; position:relative; display:grid; place-items:center; }
+.visual-frame { width:100%; max-width:490px; border:1px solid rgba(255,255,255,.13); border-radius:28px; padding:12px; background:rgba(255,255,255,.06); box-shadow:0 28px 80px rgba(0,0,0,.32); transform:rotate(1deg); }
+.visual-frame img { display:block; width:100%; height:300px; object-fit:cover; border-radius:19px; }
+.preview-car { display:none; width:100%; height:300px; border-radius:19px; background:linear-gradient(145deg,#26352B,#111A14); }
+.visual-tag { position:absolute; bottom:7px; left:0; background:#F4D33C; color:#1B1B12; padding:12px 17px; border-radius:14px; font-size:12px; font-weight:850; box-shadow:0 12px 30px #0005; }
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:32px; max-width:490px; }
+.stat { border-left:2px solid var(--site-primary); padding-left:12px; }
+.stat strong { display:block; font-size:17px; color:#F4D33C; }
+.stat span { font-size:11px; color:#AEB9B0; }
+.section { padding:76px 0; background:light-dark(#F6F8F5,#121813); color:var(--ink); }
+.section-head { max-width:650px; margin:0 auto 35px; text-align:center; }
+.kicker { color:var(--site-primary); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.17em; }
+h2 { font-size:clamp(30px,4vw,42px); line-height:1.1; letter-spacing:-.04em; margin:12px 0; }
+.section-head p { color:var(--muted); line-height:1.7; margin:0; }
+.booking-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:22px; align-items:stretch; }
+.info-card, .form-card { background:var(--panel); border:1px solid var(--line); border-radius:22px; padding:28px; box-shadow:0 12px 35px rgba(0,0,0,.05); }
+.info-card { background:linear-gradient(150deg,#0C6849,#123A2B); color:white; border:0; display:flex; flex-direction:column; justify-content:space-between; min-height:420px; }
+.info-card h3 { font-size:26px; line-height:1.2; margin:12px 0; }
+.info-card p { color:#C4D9CE; line-height:1.75; font-size:14px; }
+.info-line { display:flex; align-items:center; gap:12px; color:#F5F6F0; font-size:13px; margin-top:18px; }
+.info-icon { width:38px; height:38px; display:grid; place-items:center; border-radius:12px; background:#FFFFFF1A; color:#F1D64B; font-size:18px; }
+.form-card h3 { font-size:23px; margin:0 0 7px; }
+.form-intro { color:var(--muted); font-size:13px; margin:0 0 23px; line-height:1.6; }
+.field { margin-bottom:17px; }
+.field label { display:block; font-size:12px; font-weight:800; margin-bottom:8px; }
+.field input, .field select { width:100%; min-height:50px; padding:0 14px; border:1px solid var(--line); border-radius:12px; color:var(--ink); background:var(--soft); outline:none; }
+.field input:focus, .field select:focus { border-color:var(--site-primary); box-shadow:0 0 0 3px rgba(8,127,85,.12); }
+.date-time-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.date-time-field { position:relative; }
+.date-time-field input { min-height:56px; padding:0 14px; font-weight:750; letter-spacing:.02em; }
+.date-time-field input::-webkit-calendar-picker-indicator { cursor:pointer; opacity:.8; filter:sepia(.7) saturate(1.4); }
+.field-hint { display:block; color:var(--muted); font-size:10px; margin-top:7px; }
+@media(max-width:520px) { .date-time-grid { grid-template-columns:1fr; gap:0; } }
+.form-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+.form-actions .btn { min-height:52px; font-size:13px; }
+.email-btn { background:var(--site-primary); color:white; }
+.whatsapp-btn { background:#1FAD68; color:white; }
+.privacy { color:var(--muted); font-size:11px; line-height:1.55; margin-top:14px; }
+.areas { padding:65px 0; background:light-dark(#FFFFFF,#1A211C); color:var(--ink); }
+.area-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:11px; margin-top:28px; }
+.area { border:1px solid var(--line); background:var(--soft); border-radius:13px; padding:15px 13px; display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; }
+.area i { width:8px; height:8px; flex:0 0 8px; border-radius:50%; background:var(--site-primary); box-shadow:0 0 0 4px rgba(8,127,85,.1); }
+.footer { padding:28px 0; background:#0D120E; color:#AAB6AD; font-size:12px; }
+.footer-inner { display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap; }
+.footer strong { color:#F1D54C; }
+@media(max-width:800px) { .hero-grid,.booking-grid { grid-template-columns:1fr; } .hero { padding:48px 0 58px; } .hero-visual { min-height:280px; } .visual-frame img,.preview-car { height:250px; } .area-grid { grid-template-columns:repeat(2,1fr); } .nav { gap:12px; } }
+@media(max-width:520px) { .container { width:calc(100% - 28px); } .topbar { padding:12px 0; } .brand img { width:48px;height:48px; } .nav a { display:none; } .hero-grid { gap:25px; } .hero-actions .btn { flex:1; } .stats { gap:7px; } .stat strong { font-size:14px; } .stat span { font-size:10px; } .section,.areas { padding:54px 0; } .info-card,.form-card { padding:22px; } .form-actions { grid-template-columns:1fr; } .area-grid { gap:8px; } .area { font-size:12px; padding:12px 9px; } }
+</style>
+</head>
+<body>
+<div id="app">
+<header class="container topbar">
+  <a class="brand" href="#home" aria-label="Taxi 9.5 home"><img id="brandLogo" src="assets/taxi95-logo.jpg" alt="Taxi 9.5 logo"><span>TAXI 9.5<small>VAL-D’OISE · FRANCE</small></span></a>
+  <nav class="nav"><a href="#home" data-fr="Accueil" data-en="Home">Accueil</a><a href="#booking" data-fr="Réservation" data-en="Booking">Réservation</a><a href="#areas" data-fr="Zones desservies" data-en="Service areas">Zones desservies</a><button class="lang" id="langBtn" type="button">EN</button></nav>
+</header>
+<main>
+<section class="hero" id="home"><div class="container hero-grid">
+  <div>
+    <div class="eyebrow"><span class="dot"></span><span data-fr="Votre trajet, notre priorité" data-en="Your ride, our priority">Votre trajet, notre priorité</span></div>
+    <h1 data-fr="Votre taxi,<br><span>en toute simplicité.</span>" data-en="Your taxi,<br><span>made simple.</span>">Votre taxi,<br><span>en toute simplicité.</span></h1>
+    <p class="hero-copy" data-fr="Réservez votre prise en charge en quelques instants. Choisissez simplement votre point de départ et envoyez votre demande par e-mail ou WhatsApp." data-en="Book your pickup in just a few moments. Simply choose your pickup point and send your request by email or WhatsApp.">Réservez votre prise en charge en quelques instants. Choisissez simplement votre point de départ et envoyez votre demande par e-mail ou WhatsApp.</p>
+    <div class="hero-actions"><a class="btn btn-primary" href="#booking" data-fr="Réserver maintenant ↗" data-en="Book now ↗">Réserver maintenant ↗</a><a class="btn btn-outline" href="https://wa.me/33612736444" target="_blank" rel="noopener">WhatsApp ↗</a></div>
+    <div class="stats"><div class="stat"><strong>11</strong><span data-fr="Points de départ" data-en="Pickup points">Points de départ</span></div><div class="stat"><strong>24/7</strong><span data-fr="Demandes en ligne" data-en="Online requests">Demandes en ligne</span></div><div class="stat"><strong>CDG</strong><span data-fr="Transferts aéroport" data-en="Airport transfers">Transferts aéroport</span></div></div>
+  </div>
+  <div class="hero-visual"><div class="visual-frame">
+    <img class="hero-photo" src="https://images.pexels.com/photos/5835272/pexels-photo-5835272.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Taxi jaune en ville — photo Tim Samuel / Pexels" loading="eager">
+    <svg class="preview-car" viewBox="0 0 600 330" role="img" aria-label="Illustration de taxi" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="carPaint" x1="0" x2="1"><stop stop-color="#F4D43E"/><stop offset="1" stop-color="#C59E12"/></linearGradient></defs><circle cx="300" cy="165" r="125" fill="none" stroke="#0B8B5B" stroke-width="2" opacity=".45"/><path d="M105 221 L135 158 Q145 140 177 133 L236 90 Q255 77 292 77 L391 82 Q422 86 444 112 L490 160 L520 183 L514 225 Z" fill="url(#carPaint)" stroke="#F8E7A0" stroke-width="4"/><path d="M173 142 L245 97 Q260 89 290 90 L379 94 Q400 97 417 119 L438 153 Z" fill="#18251D" stroke="#E6C843" stroke-width="3"/><path d="M280 91 L279 151 M388 96 L408 153" stroke="#9FB2A4" stroke-width="3"/><rect x="291" y="52" width="82" height="27" rx="7" fill="#F6D83E"/><text x="332" y="70" text-anchor="middle" font-size="15" font-weight="900" fill="#1C241C">TAXI</text><path d="M113 190 L82 198 L77 220 L112 225 M480 179 L526 190 L535 216 L512 223" fill="#F4D43E"/><circle cx="190" cy="225" r="43" fill="#101510" stroke="#E5E5D8" stroke-width="7"/><circle cx="190" cy="225" r="20" fill="#7D8980" stroke="#D8D8C8" stroke-width="5"/><circle cx="432" cy="225" r="43" fill="#101510" stroke="#E5E5D8" stroke-width="7"/><circle cx="432" cy="225" r="20" fill="#7D8980" stroke="#D8D8C8" stroke-width="5"/><path d="M125 192 L480 192" stroke="#7E6410" stroke-width="3" opacity=".7"/><path d="M140 245 Q300 270 486 245" fill="none" stroke="#7B6314" stroke-width="3"/></svg>
+  </div><div class="visual-tag" data-fr="Disponible pour vos déplacements" data-en="Ready for your journey">Disponible pour vos déplacements</div></div>
+</div></section>
+<section class="section" id="booking"><div class="container">
+  <div class="section-head"><div class="kicker" data-fr="Réservation rapide" data-en="Quick booking">Réservation rapide</div><h2 data-fr="Où souhaitez-vous être pris en charge ?" data-en="Where would you like to be picked up?">Où souhaitez-vous être pris en charge ?</h2><p data-fr="Remplissez les champs ci-dessous. Votre demande sera préparée automatiquement pour notre équipe." data-en="Fill in the fields below. Your request will be prepared automatically for our team.">Remplissez les champs ci-dessous. Votre demande sera préparée automatiquement pour notre équipe.</p></div>
+  <div class="booking-grid">
+    <aside class="info-card"><div><div class="eyebrow"><span class="dot"></span><span data-fr="Taxi 9.5 · Service local" data-en="Taxi 9.5 · Local service">Taxi 9.5 · Service local</span></div><h3 data-fr="Un départ simple.<br>Un trajet serein." data-en="An easy pickup.<br>A smooth ride.">Un départ simple.<br>Un trajet serein.</h3><p data-fr="Indiquez votre nom, votre téléphone et votre point de départ. Nous vous recontactons pour confirmer votre demande." data-en="Enter your name, phone number and pickup point. We will contact you to confirm your request.">Indiquez votre nom, votre téléphone et votre point de départ. Nous vous recontactons pour confirmer votre demande.</p></div><div><div class="info-line"><span class="info-icon">⌖</span><span data-fr="Val-d’Oise et alentours" data-en="Val-d’Oise and nearby areas">Val-d’Oise et alentours</span></div><div class="info-line"><span class="info-icon">✈</span><span data-fr="Transfert Roissy-CDG" data-en="Roissy-CDG transfers">Transfert Roissy-CDG</span></div><div class="info-line"><span class="info-icon">◉</span><span>+33 6 12 73 64 44</span></div></div></aside>
+    <div class="form-card"><h3 data-fr="Votre demande de réservation" data-en="Your booking request">Votre demande de réservation</h3><p class="form-intro" data-fr="Les champs marqués d’un * sont obligatoires." data-en="Fields marked with * are required.">Les champs marqués d’un * sont obligatoires.</p>
+      <form id="bookingForm" method="POST">
+        <input type="hidden" name="_subject" value="Nouvelle demande de réservation — Taxi 9.5"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="true"><input type="hidden" name="Langue" id="langField" value="Français"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="field"><label for="customerName" data-fr="Nom complet *" data-en="Full name *">Nom complet *</label><input id="customerName" name="Nom du client" type="text" placeholder="Ex. : Jean Dupont" autocomplete="name" required></div>
+        <div class="field"><label for="customerPhone" data-fr="Numéro de téléphone *" data-en="Phone number *">Numéro de téléphone *</label><input id="customerPhone" name="Téléphone" type="tel" placeholder="Ex. : +33 6 12 34 56 78" autocomplete="tel" required></div>
+        <div class="date-time-grid">
+          <div class="field date-time-field"><label for="bookingDate" data-fr="Date du trajet *" data-en="Travel date *">Date du trajet *</label><input id="bookingDate" name="Date du trajet" type="date" required><span class="field-hint" data-fr="Choisissez le jour de votre prise en charge" data-en="Choose your pickup day">Choisissez le jour de votre prise en charge</span></div>
+          <div class="field date-time-field"><label for="bookingTime" data-fr="Heure de prise en charge *" data-en="Pickup time *">Heure de prise en charge *</label><input id="bookingTime" name="Heure de prise en charge" type="time" step="60" required><span class="field-hint" data-fr="Heures et minutes (ex. 14:35)" data-en="Hours and minutes (e.g. 14:35)">Heures et minutes (ex. 14:35)</span></div>
+        </div>
+        <div class="field"><label for="pickup" data-fr="Point de départ *" data-en="Pickup location *">Point de départ *</label><select id="pickup" name="Point de départ" required><option value="" data-fr="Choisir un point de départ" data-en="Choose a pickup point">Choisir un point de départ</option><option value="Argenteuil">Argenteuil</option>
+<option value="Franconville">Franconville</option>
+<option value="Herblay-sur-Seine">Herblay-sur-Seine</option>
+<option value="Ermont-Eaubonne">Ermont-Eaubonne</option>
+<option value="Montmorency">Montmorency</option>
+<option value="Enghien-les-Bains">Enghien-les-Bains</option>
+<option value="Bezons">Bezons</option>
+<option value="Taverny">Taverny</option>
+<option value="Saint-Gratien">Saint-Gratien</option>
+<option value="Saint-Ouen-l’Aumône">Saint-Ouen-l’Aumône</option>
+<option value="Roissy-en-France (CDG)">Roissy-en-France (CDG)</option></select></div>
+        <div class="form-actions"><button class="btn email-btn" type="submit" data-fr="✉ Envoyer par e-mail" data-en="✉ Send by email">✉ Envoyer par e-mail</button><button class="btn whatsapp-btn" id="whatsappBtn" type="button">☏ WhatsApp</button></div>
+        <p class="privacy" data-fr="En envoyant ce formulaire, vous acceptez d’être contacté au sujet de votre demande. Aucune destination n’est demandée dans ce formulaire." data-en="By sending this form, you agree to be contacted about your request. No destination is requested in this form.">En envoyant ce formulaire, vous acceptez d’être contacté au sujet de votre demande. Aucune destination n’est demandée dans ce formulaire.</p>
+      </form>
+    </div>
+  </div>
+</div></section>
+<section class="areas" id="areas"><div class="container"><div class="section-head"><div class="kicker" data-fr="Nos points de prise en charge" data-en="Our pickup points">Nos points de prise en charge</div><h2 data-fr="Au départ de votre ville" data-en="Starting from your area">Au départ de votre ville</h2><p data-fr="Sélectionnez l’une de ces zones dans le formulaire de réservation." data-en="Select one of these areas in the booking form.">Sélectionnez l’une de ces zones dans le formulaire de réservation.</p></div><div class="area-grid"><div class="area"><i></i>Argenteuil</div>
+<div class="area"><i></i>Franconville</div>
+<div class="area"><i></i>Herblay-sur-Seine</div>
+<div class="area"><i></i>Ermont-Eaubonne</div>
+<div class="area"><i></i>Montmorency</div>
+<div class="area"><i></i>Enghien-les-Bains</div>
+<div class="area"><i></i>Bezons</div>
+<div class="area"><i></i>Taverny</div>
+<div class="area"><i></i>Saint-Gratien</div>
+<div class="area"><i></i>Saint-Ouen-l’Aumône</div>
+<div class="area"><i></i>Roissy-en-France (CDG)</div></div></div></section>
+</main>
+<footer class="footer"><div class="container footer-inner"><div><strong>TAXI 9.5</strong> · Val-d’Oise, France</div><div>WhatsApp : <a href="https://wa.me/33612736444">+33 6 12 73 64 44</a></div><div>© <span id="year"></span> Taxi 9.5</div></div></footer>
+</div>
+<script>
+// CONFIGURATION : modifiez ces deux valeurs avant la mise en ligne.
+const CONFIG = {
+  email: "YOUR_EMAIL@example.com", // Votre adresse Gmail de réception
+  whatsapp: "33612736444"          // Format international, sans + ni espaces
+};
+const translations = { fr: { subject: "Nouvelle demande de réservation — Taxi 9.5", language: "Français", emailError: "Veuillez d’abord configurer votre adresse e-mail dans le fichier index.html.", required: "Veuillez remplir votre nom, votre téléphone, la date, l’heure et le point de départ." }, en: { subject: "New booking request — Taxi 9.5", language: "English", emailError: "Please configure your email address in index.html first.", required: "Please enter your name, phone number, travel date, pickup time and pickup location." } };
+let currentLang = "fr";
+function setLanguage(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-fr][data-en]").forEach(el => {
+    const value = el.dataset[lang];
+    if (value !== undefined) el.innerHTML = value;
+  });
+  document.getElementById("langBtn").textContent = lang === "fr" ? "EN" : "FR";
+  document.getElementById("langField").value = translations[lang].language;
+  document.getElementById("bookingForm").querySelector('[name="_subject"]').value = translations[lang].subject;
+}
+document.getElementById("langBtn").addEventListener("click", () => setLanguage(currentLang === "fr" ? "en" : "fr"));
+document.getElementById("year").textContent = new Date().getFullYear();
+const dateInput = document.getElementById("bookingDate");
+const today = new Date();
+const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+dateInput.min = localToday;
+function bookingData() {
+  return {
+    name: document.getElementById("customerName").value.trim(),
+    phone: document.getElementById("customerPhone").value.trim(),
+    pickup: document.getElementById("pickup").value,
+    date: document.getElementById("bookingDate").value,
+    time: document.getElementById("bookingTime").value
+  };
+}
+function valid(data) {
+  if (!data.name || !data.phone || !data.pickup || !data.date || !data.time) {
+    alert(translations[currentLang].required);
+    return false;
+  }
+  return true;
+}
+document.getElementById("whatsappBtn").addEventListener("click", () => {
+  const data = bookingData();
+  if (!valid(data)) return;
+  const message = currentLang === "fr"
+    ? `Bonjour Taxi 9.5, je souhaite réserver un trajet.\nNom : ${data.name}\nTéléphone : ${data.phone}\nDate : ${new Date(data.date + "T00:00:00").toLocaleDateString("fr-FR")}\nHeure : ${data.time}\nPoint de départ : ${data.pickup}`
+    : `Hello Taxi 9.5, I would like to book a ride.\nName: ${data.name}\nPhone: ${data.phone}\nDate: ${new Date(data.date + "T00:00:00").toLocaleDateString("en-GB")}\nTime: ${data.time}\nPickup location: ${data.pickup}`;
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`, "_blank", "noopener");
+});
+document.getElementById("bookingForm").addEventListener("submit", event => {
+  const data = bookingData();
+  if (!valid(data)) { event.preventDefault(); return; }
+  if (!CONFIG.email || CONFIG.email === "YOUR_EMAIL@example.com") {
+    event.preventDefault();
+    alert(translations[currentLang].emailError);
+    return;
+  }
+  event.currentTarget.action = `https://formsubmit.co/${encodeURIComponent(CONFIG.email)}`;
+});
+</script>
+</body></html>
